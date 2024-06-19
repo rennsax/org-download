@@ -163,17 +163,17 @@ will be used."
   "The file to capture screenshots."
   :type 'string)
 
-(defcustom org-download-image-html-width 0
-  "When non-zero add #+attr_html: :width tag to the image."
-  :type 'integer)
+(defcustom org-download-image-html-width ""
+  "When non-nil add #+attr_html: width tag to the image."
+  :type 'string)
 
-(defcustom org-download-image-latex-width 0
-  "When non-zero add #+attr_latex: :width tag to the image."
-  :type 'integer)
+(defcustom org-download-image-latex-width ""
+  "When non-nil add #+attr_latex: :width tag to the image."
+  :type 'string)
 
-(defcustom org-download-image-org-width 0
-  "When non-zero add #+attr_org: :width tag to the image."
-  :type 'integer)
+(defcustom org-download-image-org-width ""
+  "When non-nil add #+attr_org: :width tag to the image."
+  :type 'string)
 
 (defcustom org-download-image-attr-list nil
   "Add attr info to the image.
@@ -573,15 +573,15 @@ It's inserted before the image link and is used to annotate it.")
     (insert (funcall org-download-annotate-function link))
     (dolist (attr org-download-image-attr-list)
       (insert attr "\n"))
-    (insert (if (= org-download-image-html-width 0)
+    (insert (if (string= org-download-image-html-width "")
                 ""
-              (format "#+attr_html: :width %dpx\n" org-download-image-html-width)))
-    (insert (if (= org-download-image-latex-width 0)
+              (format "#+attr_html: :width %s\n" org-download-image-html-width)))
+    (insert (if (string= org-download-image-latex-width "")
                 ""
-              (format "#+attr_latex: :width %dcm\n" org-download-image-latex-width)))
-    (insert (if (= org-download-image-org-width 0)
+              (format "#+attr_latex: :width %s\n" org-download-image-latex-width)))
+    (insert (if (string= org-download-image-org-width "")
                 ""
-              (format "#+attr_org: :width %dpx\n" org-download-image-org-width)))
+              (format "#+attr_org: :width %s\n" org-download-image-org-width)))
     (insert (funcall org-download-link-format-function filename))
     (org-download--display-inline-images)
     (setq str (buffer-substring-no-properties line-beg (point)))
